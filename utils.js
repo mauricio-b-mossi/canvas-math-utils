@@ -145,7 +145,7 @@ export function len(vec) {
  * //   [3, 6]
  * // ]
  */
-function transpose(A) {
+export function transpose(A) {
 
     const at = Array(A[0].length)
 
@@ -188,7 +188,7 @@ function transpose(A) {
  * //   [43, 50]
  * // ]
  */
-function matMult(A, B) {
+export function matMult(A, B) {
     if (A[0].length !== B.length)
         throw new Error("Dimensions of the matrix do not match. Number of Cols of A (A[0].length) is not equal to number of Rows in B (B.length). Matrix should be in form A[row][col].")
 
@@ -225,7 +225,7 @@ function matMult(A, B) {
  * // Output:
  * // [2, 4, 6]
  */
-function scale(vec, s) {
+export function scale(vec, s) {
     const nvec = Array(vec.length)
     for (let i = 0; i < vec.length; i++) {
         nvec[i] = vec[i] * s
@@ -250,7 +250,7 @@ function scale(vec, s) {
  * // Output:
  * // [3, 3, 3]
  */
-function subtract(vec1, vec2) {
+export function subtract(vec1, vec2) {
     if (vec1.length !== vec2.length)
         throw new Error(`vec1 and vec2 have different lengths.\n- vec1: ${vec1}.\n- vec2: ${vec2}`)
 
@@ -283,7 +283,7 @@ function subtract(vec1, vec2) {
  * //   [0, 0, 0]
  * // ]
  */
-function rref(A) {
+export function rref(A) {
     const cA = JSON.parse(JSON.stringify(A));
     // There are as many pivots as the smallest dimension.
     for (let i = 0; i < (cA.length > cA[0].length ? cA[0].length : cA.length); i++) {
@@ -352,7 +352,7 @@ function rref(A) {
  * //   [7, 8, 9]
  * // ]
  */
-function normalizePivots(A) {
+export function normalizePivots(A) {
     const cA = JSON.parse(JSON.stringify(A));
     for (let i = 0; i < (A.length > A[0].length ? A[0].length : A.length); i++) {
         if (cA[i][i] !== 1 && cA[i][i] !== 0) {
@@ -371,7 +371,7 @@ function normalizePivots(A) {
  * @returns {number[][]} A new matrix with B appended to A.
  * @throws {Error} If the number of rows in A and B do not match.
  */
-function extend(A, B) {
+export function extend(A, B) {
     const cA = JSON.parse(JSON.stringify(A));
     if (cA.length !== B.length)
         throw new Error(`Number of rows in B must match number of rows in A.\n- A: ${cA}\n- B: ${B}`)
@@ -389,7 +389,7 @@ function extend(A, B) {
  * @returns {number[][]} The matrix in reduced row echelon form (RREF).
  * @throws {Error} If A is not a square matrix.
  */
-function gaussJordan(A) {
+export function gaussJordan(A) {
     if (A.length !== A[0].length)
         throw new Error(`Dimensions (m*n) of matrix A must be equal.`)
     const cA = extend(A, eye(A.length))
@@ -403,7 +403,7 @@ function gaussJordan(A) {
  * @returns {number[][]} The inverse of matrix A.
  * @throws {Error} If A is singular (non-invertible).
  */
-function inv(A) {
+export function inv(A) {
     const cA = gaussJordan(A)
     for (let i = 0; i < A.length; i++) {
         if (cA[i][i] === 0)
@@ -418,7 +418,7 @@ function inv(A) {
  * @param {number} n - The size of the identity matrix.
  * @returns {number[][]} The n x n identity matrix.
  */
-function eye(n) {
+export function eye(n) {
     const cA = []
     for (let i = 0; i < n; i++) {
         cA.push([])
@@ -441,7 +441,7 @@ function eye(n) {
  * @returns {number[][]} The sliced submatrix.
  * @throws {Error} If the slice indices are invalid.
  */
-function matSlice(A, start = [0, 0], end = [A.length - 1, A[0].length - 1]) {
+export function matSlice(A, start = [0, 0], end = [A.length - 1, A[0].length - 1]) {
     if (start.length != 2 || end.length != 2 || start[0] > end[0] || start[1] > end[1] || start[0] < 0 || start[0] > A.length - 1 || start[1] < 0 || start[1] > A[0].length - 1 || end[0] > A.length - 1 || end[1] > A[0].length - 1)
         throw new Error(`Invalid slice. Slices must have two components [i, y], be non-negative, within the range of indices of A, and start >= end.`)
 
@@ -462,7 +462,7 @@ function matSlice(A, start = [0, 0], end = [A.length - 1, A[0].length - 1]) {
  * @returns {number[][]} The resulting square matrix.
  * @throws {Error} If the number of arguments is not a perfect square.
  */
-function squareMatrixBuilder(...args) {
+export function squareMatrixBuilder(...args) {
     const cA = []
     const sqrt = Math.sqrt(args.length)
     if (!Number.isInteger(sqrt)) {
