@@ -1,4 +1,4 @@
-import {drawGrid} from "./utils.js"
+import { drawGrid } from "./utils.js"
 
 window.onload = function() {
     const canvas = document.getElementById("canvas1")
@@ -7,5 +7,9 @@ window.onload = function() {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
 
-    drawGrid(ctx, canvas, 10, "white", "black")
+    const squareSize = 50;
+
+    const options = { ctx, canvas, squareSize };
+
+    drawGrid({ ...options });
 }
